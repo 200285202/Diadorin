@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardápio Diadorin - Black & Gold</title>
+  <!-- Google Fonts pra deixar o bagulho mais style -->
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome para os ícones -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+    }
+    /* Vídeo de fundo */
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Overlay opaco pra destacar o conteúdo */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.3);
+      z-index: -1;
+    }
+    /* Container geral */
+    .content {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 20px;
+      color: #FFD700;
+    }
+    /* Caixa principal do cardápio */
+   .menu-container {
+  width: 100%;
+  margin: 0 auto 40px auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  padding: 40px;
+}
+    /* Header com logo e redes sociais */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .logo-container {
+      text-align: center;
+      flex-grow: 1;
+    }
+    .logo-container img {
+      width: 200px;
+    }
+    .social-media {
+      text-align: center;
+    }
+    .social-media a {
+      margin: 0 10px;
+      color: #FFD700;
+      font-size: 24px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .social-media a:hover {
+      color: #fff;
+    }
+    /* Títulos e subtítulos */
+    .title, .subtitle {
+      font-family: 'Bebas Neue', cursive;
+      text-align: center;
+      color: #FFD700;
+      margin-bottom: 10px;
+    }
+    .title {
+      font-size: 4rem;
+    }
+    .subtitle {
+      font-size: 2rem;
+    }
+    /* Seção: Títulos das áreas */
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      color: #FFD700;
+      text-align: center;
+    }
+    /* Grid de cards (Os Mais Vendidos) */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 30px;
+      align-items: start;
+      justify-items: center;
+      margin-bottom: 40px;
+    }
+    .card {
+      text-align: center;
+      max-width: 240px;
+      color: #FFD700;
+    }
+    .card img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+    .card p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    /* Seções de lista (Hambúrguer, Podrão, etc.) */
+    section {
+      margin-bottom: 40px;
+      background: rgba(0, 0, 0, 0.0);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .item {
+      margin-bottom: 20px;
+    }
+    .item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+    }
+    .item p {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+    .whatsapp-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #25D366;
+      color: #fff;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    .whatsapp-button:hover {
+      background-color: #1DA851;
+    }
+    /* Botão flutuante de WhatsApp */
+    .whatsapp-floating {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: #fff;
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 28px;
+      text-decoration: none;
+      z-index: 2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: background-color 0.3s;
+    }
+    .whatsapp-floating:hover {
+      background-color: #1DA851;
+    }
+    /* Botão de pedido (caso queira usar) */
+    .order-button {
+      background-color: #25D366;
+      color: white;
+      font-size: 1.2rem;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .order-button:hover {
+      background-color: #128C7E;
+      transform: scale(1.05);
+    }
+    .order-button:focus {
+      outline: none;
+    }
+    /* Media Queries */
+    @media screen and (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .logo-container {
+        margin: 20px 0;
+      }
+      .order-button {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 1rem;
+      }
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media screen and (max-width: 480px) {
+      .logo-container img {
+        width: 100px;
+      }
+      .order-button {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Vídeo de fundo -->
+  <div class="video-background">
+    <video autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo em HTML5.
+    </video>
+  </div>
+  
+  <!-- Overlay -->
+  <div class="overlay"></div>
+  
+  <!-- Conteúdo principal -->
+  <div class="content">
+    <div class="menu-container">
+      <!-- Cabeçalho: Logo e Redes Sociais -->
+      <div class="header-container">
+        <div class="logo-container">
+          <img src="logo.png" alt="Logo">
+        </div>
+        <div class="social-media">
+          <a href="https://wa.me/seuNumero" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://facebook.com/suaPagina" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com/seuPerfil" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <!-- Título e Subtítulo -->
+      <h1 class="title">Cardápio Diadorin</h1>
+      <p class="subtitle">“Se é pra cair em tentação, que seja com um burguer épico!”</p>
+      
+      <!-- Seção: Podrão - Hambúrguer -->
+      <section>
+        <h2 class="section-title">Podrão</h2>
+        <div class="cards">
+          <div class="card">
+            <img src="podrao.jpg" alt="X Tudo Podrão">
+            <h3>X TUDO PODRÃO</h3>
+            <p>Pão, carne, bacon, calabresa, ovo, queijo, presunto, alface, cebola, milho, ervilha,
+              queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
+            <p class="price">R$ 27,90</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="podrao2.jpg" alt="X TUDO DUPLO">
+            <h3>X TUDO DUPLO</h3>
+            <p>Pão, 2 carnes, bacon, calabresa, 2 ovos, 2 queijos, 2 presuntos, alface, cebola, – 
+              milho, ervilha, queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
+            <p class="price">R$ 33,90</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="podrao3.jpg" alt="X TUDO TRIPLO">
+            <h3>X TUDO TRIPLO</h3>
+            <p>Pão, 3 carnes, bacon, calabresa, 3 ovos, 3 queijos, 3 presuntos, alface, cebola,
+              milho, ervilha, queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
+            <p class="price">R$ 38,90</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="podrao4.jpg" alt="X TUDO BACON">
+            <h3>X TUDO BACON</h3>
+            <p>Pão, carne, bacon, queijo, presunto, alface, cebola, milho, ervilha, queijo ralado,
+              azeitona, ovo de codorna, batata palha e 3 molhos.</p>
+            <p class="price">R$ 27,90</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Seção: Burguers -->
+      <section>
+        <h2 class="section-title">Burguers</h2>
+        <div class="cards">
+          <div class="card">
+            <img src="x1.jpg" alt="Chesseburguer">
+            <h3>Chesseburguer</h3>
+            <p>Pão, 120g de Carne, Queijo e molho da casa.</p>
+            <p class="price">R$ 21,99 (solo) / R$ 38,90 (combo)</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="x2.jpg" alt="Salada Burguer">
+            <h3>Salada Burguer</h3>
+            <p>Pão, 120g de Carne, Queijo, Salada e Maionese.</p>
+            <p class="price">R$ 22,99 (solo) / R$ 39,90 (combo)</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="x3.jpg" alt="Bacon Burger">
+            <h3>Bacon Burger</h3>
+            <p>Pão, 120g de Carne, Queijo, Bacon, Salada e Maionese.</p>
+            <p class="price">R$ 23,90 (solo) / R$ 41,00 (combo)</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="x4.jpg" alt="Tudo Burger">
+            <h3>Tudo Burger</h3>
+            <p>Pão, 120g de Carne, Bacon, Salada, Ovo, Requeijão, Milho, Presunto, Queijo e Maionese.</p>
+            <p class="price">R$ 25,99 (solo) / R$ 42,90 (combo)</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Seção: Combos -->
+      <section>
+        <h2 class="section-title">Combos</h2>
+        <div class="cards">
+          <div class="card">
+            <img src="combo.jpg" alt="Combo Solteiro">
+            <h3>Combo Solteiro</h3>
+            <p>1 Hambúrguer Artesanal 120g e 3 deliciosas porções da sua escolha.</p>
+            <p class="price">R$ 54,90</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="combo2.jpg" alt="Combo Casal">
+            <h3>Combo Casal</h3>
+            <p>2 Hambúrgueres Artesanais 120g + 3 deliciosas porções da sua escolha.</p>
+            <p class="price">R$ 95,50</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="combo3.jpg" alt="Combo Familia">
+            <h3>Combo Familia</h3>
+            <p>3 Hambúrgueres Artesanais 120g + 3 deliciosas porções da sua escolha.</p>
+            <p class="price">R$ 125,90</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="combo4.jpg" alt="Combo Amigos">
+            <h3>Combo Amigos</h3>
+            <p>4 Hambúrgueres + 3 deliciosas porções da sua escolha.</p>
+            <p class="price">R$ 135,90</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Seção: Bebidas -->
+      <section>
+        <h2 class="section-title">Bebidas</h2>
+        <div class="cards">
+          <div class="card">
+            <img src="suco.jpg" alt="Sucos Naturais">
+            <h3>Sucos Naturais</h3>
+            <p class="price">R$ 15,00</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+          <div class="card">
+            <img src="refri.jpg" alt="Refrigerante em Lata">
+            <h3>Refrigerante em Lata</h3>
+            <p class="price">R$ 7,00</p>
+            <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
+          </div>
+        </div>
+      </section>
+      
+    </div>
+  </div>
+</body>
+</html>
