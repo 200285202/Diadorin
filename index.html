@@ -252,6 +252,26 @@
       color: white;
       margin: 15px 0;
     }
+
+    .cart-container {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+.cart-items {
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 15px 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
   </style>
 </head>
 <body>
@@ -414,5 +434,64 @@
       
     </div>
   </div>
+
+
+  <div class="cart-container">
+  <h2 class="section-title">Seu Carrinho</h2>
+  <div class="cart-items"></div>
+  <div class="total">Total: R$<span id="total">0.00</span></div>
+  <button class="order-button" onclick="checkout()">
+    Finalizar Pedido <i class="fab fa-whatsapp"></i>
+  </button>
+</div>
+
+
+
+  <script>
+  let cart = [];
+  let total = 0;
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    total += price;
+    
+    // Atualiza visualmente
+    const cartItems = document.querySelector('.cart-items');
+    const totalElement = document.getElementById('total');
+    
+    // Limpa e recria a lista
+    cartItems.innerHTML = '';
+    cart.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+      div.innerHTML = `
+        <span>${item.name}</span>
+        <span>R$${item.price.toFixed(2)}</span>
+      `;
+      cartItems.appendChild(div);
+    });
+    
+    totalElement.textContent = total.toFixed(2);
+  }
+
+  function checkout() {
+    if(cart.length === 0) return;
+
+    let message = "Olá! Meu pedido:%0A";
+    cart.forEach(item => {
+      message += `✅ ${item.name} - R$${item.price.toFixed(2)}%0A`;
+    });
+    message += `%0ATotal: R$${total.toFixed(2)}%0A%0A`;
+    message += "Podem confirmar? 😊";
+
+    window.open(`https://wa.me/5511911653936?text=${encodeURIComponent(message)}`);
+    
+    // Limpa carrinho
+    cart = [];
+    total = 0;
+    document.querySelector('.cart-items').innerHTML = '';
+    document.getElementById('total').textContent = '0.00';
+  }
+</script>
 </body>
 </html>
