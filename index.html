@@ -3,499 +3,528 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cardápio Diadorin</title>
-  <!-- Google Fonts pra deixar o bagulho mais style -->
-  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <!-- FontAwesome para os ícones -->
+  <title>Diadorin Hamburgueria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
+
   <style>
-    /* Reset básico */
+    :root {
+      --gold: #FFD700;
+      --dark: #000;
+      --accent: #25D366;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-    html, body {
-      width: 100%;
-      height: 100%;
       font-family: 'Montserrat', sans-serif;
     }
-    /* Vídeo de fundo */
-    .video-background {
+
+    body {
+      min-height: 100vh;
+      color: var(--gold);
+      position: relative;
+    }
+
+    /* Vídeo de Fundo */
+    .video-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -2;
-      overflow: hidden;
     }
-    .video-background video {
+    .video-bg video {
+      object-fit: cover;
       width: 100%;
       height: 100%;
-      object-fit: cover;
     }
-    /* Overlay opaco pra destacar o conteúdo */
+
+    /* Overlay Gradiente */
     .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.3);
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8));
       z-index: -1;
     }
-    /* Container geral */
+
+    /* Container Principal */
     .content {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
-      padding: 20px;
-      color: #FFD700;
-    }
-    /* Caixa principal do cardápio */
-    .menu-container {
-      width: 100%;
-      margin: 0 auto 40px auto;
-      background-color: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
       padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    /* Header com logo e redes sociais */
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-    }
-    .logo-container {
+
+    /* Header */
+    .header {
       text-align: center;
-      flex-grow: 1;
+      margin-bottom: 60px;
     }
-    .logo-container img {
+    .logo {
       width: 300px;
+      margin: 0 auto 20px;
     }
-    .social-media {
-      text-align: center;
-    }
-    .social-media a {
-      margin: 0 10px;
-      color: #FFD700;
-      font-size: 24px;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .social-media a:hover {
-      color: #fff;
-    }
-    /* Títulos e subtítulos */
-    .title, .subtitle {
-      font-family: 'Bebas Neue', cursive;
-      text-align: center;
-      color: #FFD700;
-      margin-bottom: 10px;
-    }
-    .title {
-      font-size: 4rem;
-    }
-    .subtitle {
-      font-size: 2rem;
-    }
-    /* Seção: Títulos das áreas */
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-      color: #FFD700;
-      text-align: center;
-    }
-    /* Grid de cards (Os Mais Vendidos) */
+
+    /* Grid de Cards */
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(4, 1fr); /* 4 colunas fixas no PC */
       gap: 30px;
-      align-items: start;
-      justify-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 60px;
     }
-    .card {
-      text-align: center;
-      max-width: 240px;
-      color: #FFD700;
-    }
-    .card img {
-      width: 180px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 5px;
-    }
-    .card p {
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-    /* Seções de lista (Hambúrguer, Podrão, etc.) */
-    section {
-      margin-bottom: 40px;
-      background: rgba(0, 0, 0, 0.0);
-      padding: 20px;
-      border-radius: 10px;
-    }
-    .item {
-      margin-bottom: 20px;
-    }
-    .item h3 {
-      font-size: 1.4rem;
-      margin-bottom: 5px;
-    }
-    .item p {
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-    .whatsapp-button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #25D366;
-      color: #fff;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 16px;
-      transition: background-color 0.3s;
-    }
-    .whatsapp-button:hover {
-      background-color: #1DA851;
-    }
-    /* Carrinho Lateral */
-    .cart {
-  position: fixed; /* Fixa o carrinho na tela */
-  top: 100px; /* Distância do topo */
-  right: 20px; /* Distância da direita */
-  width: 300px; /* Largura do carrinho */
-  background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro com transparência */
-  color: #FFD700; /* Cor do texto dourado */
-  padding: 20px; /* Espaçamento interno */
-  border-radius: 10px; /* Bordas arredondadas */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Sombra para destaque */
-  z-index: 9999; /* Garante que o carrinho fique à frente de tudo */
+
+
+
+    /* Título da seção "Podrão" */
+.section-title {
+  text-align: center;            /* Centraliza o texto */
+  font-family: 'Bangers', cursive; /* Exemplo de fonte com estilo 'hamburgueria' */
+  font-size: 2rem;              /* Tamanho da fonte */
+  color: #FFD700;                 /* Cor do texto */
+  text-transform: uppercase;    /* Deixa tudo em maiúsculas (opcional) */
+  letter-spacing: 2px;          /* Espaçamento entre letras para dar mais impacto */
+  margin-bottom: 30px;          /* Espaçamento abaixo do título */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Efeito de sombra no texto (opcional) */
 }
 
-.cart h2 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+
+   /* Estilo dos Cards */
+.card {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(40, 40, 40, 0.6));
+  border-radius: 10px;
+  padding: 20px;
   text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.5);
 }
 
-#cart-items {
-  max-height: 300px; /* Altura máxima da lista */
-  overflow-y: auto; /* Barra de rolagem se necessário */
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
   margin-bottom: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-#cart-items li {
+/* Destaque para o nome do lanche */
+.card h3 {
+  color: #ffd700; /* Dourado */
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+/* Descrição do lanche */
+.card p {
+  color: #ddd;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+/* Destaque para o preço */
+.card .price {
+  color: #ff4500; /* Tom de laranja avermelhado */
+  font-size: 1.4rem;  /* Maior que o normal */
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+
+    /* Carrinho Lateral */
+    /* Nova estilização pro carrinho */
+.cart {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 250px;  /* Diminuindo a largura */
+  background: rgba(0, 0, 0, 0.85);  /* Um background um pouco mais opaco pra destacar */
+  border-radius: 10px;
+  padding: 15px;  /* Reduzindo o padding */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  z-index: 999;
+  font-size: 0.9rem; /* Diminuindo um pouco a fonte */
+  overflow-y: auto; /* Pra quando tiver muitos itens, adicionar scroll */
+  max-height: 80vh; /* Limita a altura para não dominar a tela */
+}
+
+/* Ajuste nos itens do carrinho pra um visual mais clean */
+.cart-item {
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
-  border-bottom: 1px solid #444; /* Linha divisória entre itens */
+  border-bottom: 1px solid var(--gold);
+  font-size: 0.85rem;
 }
 
-#cart-items li:last-child {
-  border-bottom: none; /* Remove a linha do último item */
-}
-
-#total {
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-align: right;
-}
-
-#checkout-button {
-  width: 100%; /* Botão ocupa toda a largura */
-  background-color: #25D366; /* Verde do WhatsApp */
+/* Ajustando o botão de finalizar para ficar mais compacto */
+.checkout-btn {
+  background: var(--accent);
   color: white;
-  font-size: 1rem;
   padding: 10px;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 0.95rem;
+  width: 100%;
+  margin-top: 15px;
 }
 
-#checkout-button:hover {
-  background-color: #1DA851; /* Verde mais escuro no hover */
+/* Responsividade pra telas menores */
+@media (max-width: 768px) {
+  .cart {
+    width: 90%;
+    right: 5%;
+    top: auto;
+    bottom: 20px; /* Posiciona o carrinho na parte de baixo pra não atrapalhar o cardápio */
+  }
 }
-    /* Media Queries */
-    @media screen and (max-width: 768px) {
-      .header-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .logo-container {
-        margin: 50px 0;
-      }
-      .order-button {
-        width: 100%;
-        padding: 15px 20px;
-        font-size: 1rem;
+
+
+
+    .whatsapp-button {
+  display: inline-block;
+  background-color: #25D366; /* Cor estilo "WhatsApp", mas pode trocar pela sua cor */
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.whatsapp-button:hover {
+  background-color: #1EBE5F; /* Tom um pouco mais escuro */
+  transform: scale(1.05);
+}
+
+.whatsapp-button:active {
+  transform: scale(1.0);
+}
+
+    
+
+    /* Responsividade */
+    @media (max-width: 1200px) {
+      .content {
+        padding-right: 400px; /* Espaço para o carrinho não sobrepor */
       }
       .cards {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas em telas médias */
       }
     }
-    @media screen and (max-width: 480px) {
-      .logo-container img {
-        width: 200px;
+
+    @media (max-width: 992px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas em tablets */
       }
-      .order-button {
-        font-size: 1rem;
-        padding: 10px 20px;
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        padding-right: 0; /* Remove espaço quando o carrinho some */
       }
       .cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* 1 coluna em celulares */
       }
-    }
-    .price {
-      font-size: 18px;
-      font-weight: bold;
-      color: white;
-      margin: 15px 0;
+      .cart {
+        width: 90%;
+        right: 5%;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Vídeo de fundo -->
-  <div class="video-background">
-    <video autoplay muted loop playsinline>
-      <source src="video.mp4" type="video/mp4" />
-      Seu navegador não suporta vídeo em HTML5.
+  <!-- Vídeo de Fundo -->
+  <div class="video-bg">
+    <video autoplay loop muted playsinline>
+      <source src="video.mp4" type="video/mp4">
     </video>
   </div>
-  <!-- Overlay -->
   <div class="overlay"></div>
-  <!-- Conteúdo principal -->
+
+  <!-- Conteúdo Principal -->
   <div class="content">
-    <div class="menu-container">
-      <!-- Cabeçalho: Logo e Redes Sociais -->
-      <div class="header-container">
-        <div class="logo-container">
-          <img src="logo.png" alt="Logo">
+    <div class="header">
+      <img src="logo.png" alt="Diadorin" class="logo">
+      <p class="tagline">"Se é pra cair em tentação, que seja com um burguer épico!"</p>
+    </div>
+
+    <!-- Seção: Podrão -->
+    <section>
+      <h2 class="section-title">Podrão</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="podrao.jpg" alt="X Tudo Podrão">
+          <h3>X TUDO PODRÃO</h3>
+          <p>Pão, carne, bacon, calabresa, ovo, queijo, presunto, alface, cebola, milho, ervilha,
+            queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
+          <p class="price">R$ 27,90</p>
+          <!-- Antes: <a class="whatsapp-button" href="..." target="_blank">Pedir</a> -->
+          <button class="whatsapp-button" onclick="addToCart('X TUDO PODRÃO', 27.90)">Colocar no Carrinho</button>
+
+
         </div>
-       
-        <h1 class="title">Cardápio Diadorin</h1>
-        <p class="subtitle">“Se é pra cair em tentação, que seja com um burguer épico!”</p>
-        
-        <!-- Seção: Podrão - Hambúrguer -->
-        <section>
-          <h2 class="section-title">Podrão</h2>
-          <div class="cards">
-            <div class="card">
-              <img src="podrao.jpg" alt="X Tudo Podrão">
-              <h3>X TUDO PODRÃO</h3>
-              <p>Pão, carne, bacon, calabresa, ovo, queijo, presunto, alface, cebola, milho, ervilha,
-                queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
-              <p class="price">R$ 27,90</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="podrao2.jpg" alt="X TUDO DUPLO">
-              <h3>X TUDO DUPLO</h3>
-              <p>Pão, 2 carnes, bacon, calabresa, 2 ovos, 2 queijos, 2 presuntos, alface, cebola, – 
-                milho, ervilha, queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
-              <p class="price">R$ 33,90</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="podrao3.jpg" alt="X TUDO TRIPLO">
-              <h3>X TUDO TRIPLO</h3>
-              <p>Pão, 3 carnes, bacon, calabresa, 3 ovos, 3 queijos, 3 presuntos, alface, cebola,
-                milho, ervilha, queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
-              <p class="price">R$ 38,90</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="podrao4.jpg" alt="X TUDO BACON">
-              <h3>X TUDO BACON</h3>
-              <p>Pão, carne, bacon, queijo, presunto, alface, cebola, milho, ervilha, queijo ralado,
-                azeitona, ovo de codorna, batata palha e 3 molhos.</p>
-              <p class="price">R$ 27,90</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-          </div>
-        </section>
-        
-        <!-- Seção: Burguers -->
-        <section>
-          <h2 class="section-title">Burguers</h2>
-          <div class="cards">
-            <div class="card">
-              <img src="x1.jpg" alt="Chesseburguer">
-              <h3>Chesseburguer</h3>
-              <p>Pão, 120g de Carne, Queijo e molho da casa.</p>
-              <p class="price">R$ 21,99 (solo) / R$ 38,90 (combo)</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="x2.jpg" alt="Salada Burguer">
-              <h3>Salada Burguer</h3>
-              <p>Pão, 120g de Carne, Queijo, Salada e Maionese.</p>
-              <p class="price">R$ 22,99 (solo) / R$ 39,90 (combo)</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="x3.jpg" alt="Bacon Burger">
-              <h3>Bacon Burger</h3>
-              <p>Pão, 120g de Carne, Queijo, Bacon, Salada e Maionese.</p>
-              <p class="price">R$ 23,90 (solo) / R$ 41,00 (combo)</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="x4.jpg" alt="Tudo Burger">
-              <h3>Tudo Burger</h3>
-              <p>Pão, 120g de Carne, Bacon, Salada, Ovo, Requeijão, Milho, Presunto, Queijo e Maionese.</p>
-              <p class="price">R$ 25,99 (solo) / R$ 42,90 (combo)</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-          </div>
-        </section>
-        
-        <!-- Seção: Combos -->
-        <section>
-          <h2 class="section-title">Combos</h2>
-          <div class="cards">
-            <div class="card">
-              <img src="combo.jpg" alt="Combo Solteiro">
-              <h3>Combo Solteiro</h3>
-              <p>1 Hambúrguer Artesanal 120g e 3 deliciosas porções da sua escolha.</p>
-              <p class="price">R$ 54,90</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="combo2.jpg" alt="Combo Casal">
-              <h3>Combo Casal</h3>
-              <p>2 Hambúrgueres Artesanais 120g + 3 deliciosas porções da sua escolha.</p>
-              <p class="price">R$ 95,50</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="combo3.jpg" alt="Combo Familia">
-              <h3>Combo Familia</h3>
-              <p>3 Hambúrgueres Artesanais 120g + 3 deliciosas porções da sua escolha.</p>
-              <p class="price">R$ 125,90</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="combo4.jpg" alt="Combo Amigos">
-              <h3>Combo Amigos</h3>
-              <p>4 Hambúrgueres + 3 deliciosas porções da sua escolha.</p>
-              <p class="price">R$ 135,90</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-          </div>
-        </section>
-        
-        <!-- Seção: Bebidas -->
-        <section>
-          <h2 class="section-title">Bebidas</h2>
-          <div class="cards">
-            <div class="card">
-              <img src="suco.jpg" alt="Sucos Naturais">
-              <h3>Sucos Naturais</h3>
-              <p class="price">R$ 15,00</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-            <div class="card">
-              <img src="refri.jpg" alt="Refrigerante em Lata">
-              <h3>Refrigerante em Lata</h3>
-              <p class="price">R$ 7,00</p>
-              <a class="whatsapp-button" href="https://wa.me/5511911653936" target="_blank">Pedir</a>
-            </div>
-          </div>
-        </section>
-        
+        <div class="card">
+          <img src="podrao2.jpg" alt="X TUDO DUPLO">
+          <h3>X TUDO DUPLO</h3>
+          <p>Pão, 2 carnes, bacon, calabresa, 2 ovos, 2 queijos, 2 presuntos, alface, cebola, – 
+            milho, ervilha, queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
+          <p class="price">R$ 33,90</p>
+          <button class="whatsapp-button" onclick="addToCart('X TUDO DUPLO', 33.90)">Colocar no Carrinho</button>
+
+         
+
+        </div>
+        <div class="card">
+          <img src="podrao3.jpg" alt="X TUDO TRIPLO">
+          <h3>X TUDO TRIPLO</h3>
+          <p>Pão, 3 carnes, bacon, calabresa, 3 ovos, 3 queijos, 3 presuntos, alface, cebola,
+            milho, ervilha, queijo ralado, azeitona, ovo de codorna, batata palha e 3 molhos.</p>
+          <p class="price">R$ 38,90</p>
+          <button class="whatsapp-button" onclick="addToCart('X TUDO TRIPLO', 38.90)">Colocar no Carrinho</button>
+        </div>
+        <div class="card">
+          <img src="podrao4.jpg" alt="X TUDO BACON">
+          <h3>X TUDO BACON</h3>
+          <p>Pão, carne, bacon, queijo, presunto, alface, cebola, milho, ervilha, queijo ralado,
+            azeitona, ovo de codorna, batata palha e 3 molhos.</p>
+          <p class="price">R$ 27,90</p>
+          <button class="whatsapp-button" onclick="addToCart('X TUDO BACON', 27.90)">Colocar no Carrinho</button>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="optionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+      <div style="background:#fff; padding:20px; border-radius:8px; text-align:center; width:90%; max-width:400px;">
+        <h3 id="modalProductName">Escolha sua opção</h3>
+        <p id="modalProductDesc"></p>
+        <p id="modalProductPrices"></p>
+        <div style="margin-top:20px;">
+          <button id="soloBtn" style="padding:10px 20px; margin-right:10px;">Solo</button>
+          <button id="comboBtn" style="padding:10px 20px;">Combo</button>
+        </div>
+        <div style="margin-top:10px;">
+          <button onclick="closeModal()" style="background:transparent; border:none; color:#007BFF;">Cancelar</button>
+        </div>
       </div>
     </div>
-  
-  
-    <div class="cart-container">
-    <h2 class="section-title">Seu Carrinho</h2>
-    <div class="cart-items"></div>
-    <div class="total">Total: R$<span id="total">0.00</span></div>
-    <button class="order-button" onclick="checkout()">
-      Finalizar Pedido <i class="fab fa-whatsapp"></i>
-    </button>
+
+
+    
+    <!-- Seção: Burguers -->
+    <section>
+      <h2 class="section-title">Burguers</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="x1.jpg" alt="Chesseburguer">
+          <h3>Chesseburguer</h3>
+          <p>Pão, 120g de Carne, Queijo e molho da casa.</p>
+          <p class="price">R$ 21,99 (solo) / R$ 38,90 (combo)</p>
+          <button class="whatsapp-button" onclick="openProductModal('Chesseburguer', 'Pão, 120g de Carne, Queijo e molho da casa.', 21.99, 38.90)">Colocar no Carrinho</button>
+
+
+        </div>
+        <div class="card">
+          <img src="x2.jpg" alt="Salada Burguer">
+          <h3>Salada Burguer</h3>
+          <p>Pão, 120g de Carne, Queijo, Salada e Maionese.</p>
+          <p class="price">R$ 22,99 (solo) / R$ 39,90 (combo)</p>
+          <button class="whatsapp-button" onclick="openProductModal('Salada Burguer', 'Pão, 120g de Carne, Queijo, Salada e Maionese.', 22.99, 39.90)">Colocar no Carrinho</button>
+
+        </div>
+        <div class="card">
+          <img src="x3.jpg" alt="Bacon Burger">
+          <h3>Bacon Burguer</h3>
+          <p>Pão, 120g de Carne, Queijo, Bacon, Salada e Maionese.</p>
+          <p class="price">R$ 23,90 (solo) / R$ 41,00 (combo)</p>
+          <button class="whatsapp-button" onclick="openProductModal('Bacon Burguer', 'Pão, 120g de Carne, Queijo, Bacon, Salada e Maionese.', 23.99, 41.00)">Colocar no Carrinho</button>
+
+        </div>
+        <div class="card">
+          <img src="x4.jpg" alt="Tudo Burger">
+          <h3>Tudo Burguer</h3>
+          <p>Pão, 120g de Carne, Bacon, Salada, Ovo, Requeijão, Milho, Presunto, Queijo e Maionese.</p>
+          <p class="price">R$ 25,99 (solo) / R$ 42,90 (combo)</p>
+          <button class="whatsapp-button" onclick="openProductModal('Tudo Burguer', 'Pão, 120g de Carne, Bacon, Salada, Ovo, Requeijão, Milho, Presunto, Queijo e Maionese.', 25.99, 42.90)">Colocar no Carrinho</button>
+
+        </div>
+      </div>
+    </section>
+    
+    <!-- Seção: Combos -->
+    <section>
+      <h2 class="section-title">Combos</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="combo.jpg" alt="Combo Solteiro">
+          <h3>Combo Solteiro</h3>
+          <p>1 Hambúrguer Artesanal 120g e 3 deliciosas porções da sua escolha.</p>
+          <p class="price">R$ 54,90</p>
+          <button class="whatsapp-button" onclick="addToCart('Combo Solteiro', 54.90)">Colocar no Carrinho</button>
+        </div>
+        <div class="card">
+          <img src="combo2.jpg" alt="Combo Casal">
+          <h3>Combo Casal</h3>
+          <p>2 Hambúrgueres Artesanais 120g + 3 deliciosas porções da sua escolha.</p>
+          <p class="price">R$ 95,50</p>
+          <button class="whatsapp-button" onclick="addToCart('Combo Casal',  95.50)">Colocar no Carrinho</button>
+        </div>
+        <div class="card">
+          <img src="combo3.jpg" alt="Combo Familia">
+          <h3>Combo Familia</h3>
+          <p>3 Hambúrgueres Artesanais 120g + 3 deliciosas porções da sua escolha.</p>
+          <p class="price">R$ 125,90</p>
+          <button class="whatsapp-button" onclick="addToCart('Combo Familia', 125.90)">Colocar no Carrinho</button>
+        </div>
+        <div class="card">
+          <img src="combo4.jpg" alt="Combo Amigos">
+          <h3>Combo Amigos</h3>
+          <p>4 Hambúrgueres + 3 deliciosas porções da sua escolha.</p>
+          <p class="price">R$ 135,90</p>
+          <button class="whatsapp-button" onclick="addToCart('Combo Amigos', 135.90)">Colocar no Carrinho</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Seção: Bebidas -->
+    <section>
+      <h2 class="section-title">Bebidas</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="suco.jpg" alt="Sucos Naturais">
+          <h3>Sucos Naturais</h3>
+          <p class="price">R$ 15,00</p>
+          <button class="whatsapp-button" onclick="addToCart('Sucos Naturais', 15.00)">Colocar no Carrinho</button>
+        </div>
+        <div class="card">
+          <img src="refri.jpg" alt="Refrigerante em Lata">
+          <h3>Refrigerante</h3>
+          <p class="price">R$ 7,00</p>
+          <button class="whatsapp-button" onclick="addToCart('Refrigerante', 7.00)">Colocar no Carrinho</button>
+        </div>
+      </div>
+    </section>
+    
   </div>
-  
+</div>
 
   <!-- Carrinho Lateral -->
   <div class="cart">
     <h2>Seu Pedido</h2>
-    <ul id="cart-items"></ul>
-    <p>Total: R$<span id="total">0.00</span></p>
-    <button id="checkout-button" onclick="checkout()">Finalizar Pedido <i class="fab fa-whatsapp"></i></button>
+    <div id="cart-items"></div>
+    <div class="cart-total">Total: R$<span id="total">0.00</span></div>
+    <button class="checkout-btn" onclick="checkout()">Finalizar <i class="fab fa-whatsapp"></i></button>
   </div>
 
-  <script>
-    let cart = [];
+
+
+
+
+  <!-- Coloque esse script antes de fechar o body -->
+<!-- Script JS -->
+<script>
+  // Guarda os dados do produto selecionado
+  let selectedProduct = {};
+
+  // Função pra abrir o modal com os dados do produto
+  function openProductModal(name, desc, soloPrice, comboPrice) {
+    selectedProduct = { name, soloPrice, comboPrice };
+    document.getElementById('modalProductName').innerText = name;
+    document.getElementById('modalProductDesc').innerText = desc;
+    document.getElementById('modalProductPrices').innerText = `Solo: R$ ${soloPrice.toFixed(2)} | Combo: R$ ${comboPrice.toFixed(2)}`;
+    document.getElementById('optionModal').style.display = 'flex';
+  }
+
+  // Função pra fechar o modal
+  function closeModal() {
+    document.getElementById('optionModal').style.display = 'none';
+  }
+
+  // Atribui as ações aos botões do modal
+  document.getElementById('soloBtn').addEventListener('click', function() {
+    addToCart(selectedProduct.name + ' (Solo)', selectedProduct.soloPrice);
+    closeModal();
+  });
+  document.getElementById('comboBtn').addEventListener('click', function() {
+    addToCart(selectedProduct.name + ' (Combo)', selectedProduct.comboPrice);
+    closeModal();
+  });
+
+  // Array pra armazenar os itens do carrinho
+  let cart = [];
+
+  // Função pra adicionar item ao carrinho
+  function addToCart(productName, price) {
+    cart.push({ name: productName, price: price });
+    updateCart();
+  }
+
+  // Atualiza o carrinho na tela
+  function updateCart() {
+    const cartItemsDiv = document.getElementById('cart-items');
     let total = 0;
+    cartItemsDiv.innerHTML = ''; // Limpa o carrinho pra atualizar
 
-    // Função para adicionar itens ao carrinho
-    function addToCart(name, price) {
-      cart.push({ name, price });
-      total += price;
+    cart.forEach(item => {
+      total += item.price;
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'cart-item';
+      itemDiv.innerHTML = `<span>${item.name}</span><span>R$ ${item.price.toFixed(2)}</span>`;
+      cartItemsDiv.appendChild(itemDiv);
+    });
+    document.getElementById('total').innerText = total.toFixed(2);
+  }
 
-      // Atualiza a interface do carrinho
-      const cartItems = document.getElementById('cart-items');
-      const totalElement = document.getElementById('total');
-
-      // Limpa a lista antes de recriar
-      cartItems.innerHTML = '';
-
-      cart.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name} - R$${item.price.toFixed(2)}`;
-        cartItems.appendChild(li);
-      });
-
-      totalElement.textContent = total.toFixed(2);
+  // Função para finalizar o pedido e abrir o WhatsApp
+  function checkout() {
+    if (cart.length === 0) {
+      alert("Carrinho vazio, amigx! Adicione algum item antes de finalizar.");
+      return;
     }
+    
+    let message = "Olá, eu gostaria de fazer o seguinte pedido:%0A";
+    cart.forEach(item => {
+      message += `${item.name} - R$ ${item.price.toFixed(2)}%0A`;
+    });
+    message += `Total: R$ ${document.getElementById('total').innerText}`;
+    // Lembre de substituir '55SEUNUMERO' pelo seu número com DDI e DDD
+    let whatsappUrl = `https://wa.me/55SEUNUMERO?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  }
+</script>
 
-    // Função para finalizar o pedido via WhatsApp
-    function checkout() {
-      if (cart.length === 0) {
-        alert("Seu carrinho está vazio!");
-        return;
-      }
 
-      // Formatar mensagem para o WhatsApp
-      let message = "Olá! Meu pedido:%0A";
-      cart.forEach(item => {
-        message += `✅ ${item.name} - R$${item.price.toFixed(2)}%0A`;
-      });
-      message += `%0ATotal: R$${total.toFixed(2)}%0A%0A`;
-      message += "Podem confirmar? 😊";
 
-      // Número do WhatsApp (formato internacional)
-      const phoneNumber = "5511911653936"; // Substitua pelo número real
 
-      // Redireciona para o WhatsApp
-      window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
 
-      // Limpa o carrinho após o envio
-      cart = [];
-      total = 0;
-      document.getElementById('cart-items').innerHTML = '';
-      document.getElementById('total').textContent = '0.00';
-    }
-  </script>
+
 </body>
 </html>
